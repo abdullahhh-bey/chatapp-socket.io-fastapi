@@ -66,10 +66,7 @@
         const msgInput = document.getElementById("msg");
         const nameInput = document.getElementById("name");
 
-        const message = msgInput.value.trim();
-        const name = nameInput.value.trim();
-
-        if (message !== "" && name !== "") {
+        if (message.trim() !== "" && name.trim() !== "") {
           socket.emit("message", { user: name, text: message });
           msgInput.value = "";
         }

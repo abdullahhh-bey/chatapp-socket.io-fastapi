@@ -11,7 +11,7 @@ app = socketio.ASGIApp(sio, other_asgi_app=fastapi_app)
 @sio.event
 async def connect(sid, environ):
     print(f"User connected: {sid}")
-    await sio.emit("message", {"user": "Server", "text": f"{sid[:4]} joined the chat"})
+    await sio.emit("message",{"user": "Server", "text": f"{sid[:4]} joined the chat"})
 
 
 @sio.event
