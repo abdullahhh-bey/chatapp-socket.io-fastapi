@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FastAPI Real-Time Chat</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+      body {
+        font-family: Arial;
+        background: #f8f8f8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #chat {
+        width: 400px;
+        background: white;
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 5px #ccc;
+      }
+      input {
+        width: 80%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        padding: 8px 12px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+      }
+      #messages {
+        margin-top: 10px;
+        min-height: 150px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>💬 Private Chat</h1>
+
+    <div id="chat">
+      <div id="messages"></div>
+
+      <input id="msg" placeholder="Type message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+      const socket = io("http://localhost:8000");
+
+      socket.on("message", (data) => {
+        const messages = document.getElementById("messages");
+        const p = document.createElement("p");
+        p.textContent = data;
+        messages.appendChild(p);
+      });
+
+
+      function sendMessage() {
+        const input = document.getElementById("msg");
+        const message = input.value.trim();
+        if (message !== "") {
+          socket.emit("message", message);
+          input.value = "";
+        }
+      }
+    </script>
+  </body>
+</html>
